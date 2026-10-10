@@ -8,6 +8,9 @@
   <!-- Firebase SDKs (Compat Version) -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  
+  <!-- AOS Animation Library CDN -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
   <style>
     /* ==========================================
@@ -74,6 +77,12 @@
       border: 2px solid var(--primary-cyan);
       object-fit: cover;
       box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+      animation: pulseGlow 3s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 10px rgba(0, 240, 255, 0.4); transform: scale(1); }
+      100% { box-shadow: 0 0 25px rgba(0, 240, 255, 0.8); transform: scale(1.03); }
     }
 
     .brand-name {
@@ -127,6 +136,12 @@
       margin-bottom: 22px;
       border: 3px solid var(--primary-cyan);
       object-fit: cover;
+      animation: floatLogo 4s ease-in-out infinite;
+    }
+
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
 
     .main-title {
@@ -157,6 +172,12 @@
       margin-bottom: 35px;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(10px);
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    }
+
+    .team-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 50px rgba(0, 240, 255, 0.2);
     }
 
     .team-card h3 {
@@ -206,6 +227,13 @@
       color: #e2e8f0;
       font-weight: 600;
       box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.05);
+      transition: all 0.2s ease;
+    }
+
+    .team-list li:hover {
+      background: rgba(0, 240, 255, 0.15);
+      border-color: var(--primary-cyan);
+      transform: scale(1.05);
     }
 
     /* --- Live Counter Panel --- */
@@ -217,6 +245,11 @@
       padding: 24px;
       margin-bottom: 35px;
       box-shadow: 0 0 25px rgba(255, 0, 128, 0.12);
+      transition: transform var(--transition-speed);
+    }
+
+    .counter-box:hover {
+      transform: scale(1.02);
     }
 
     .counter-box h3 {
@@ -248,7 +281,7 @@
     }
 
     .join-btn:hover {
-      transform: translateY(-3px);
+      transform: translateY(-3px) scale(1.05);
       box-shadow: 0 0 35px rgba(0, 240, 255, 0.8);
     }
 
@@ -362,6 +395,11 @@
       border-radius: 18px;
       border: 2px solid var(--primary-cyan);
       box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .schedule-img:hover {
+      transform: scale(1.02);
     }
 
     .swipe-indicator {
@@ -385,7 +423,7 @@
 <body>
 
   <!-- Navigation Bar -->
-  <header class="top-bar">
+  <header class="top-bar" data-aos="fade-down" data-aos-duration="800">
     <div class="logo-container">
       <img src="logo.jpg" alt="Hacktivators Logo" class="nav-logo" onerror="this.style.display='none'">
       <span class="brand-name">HACKTIVATORS</span>
@@ -398,12 +436,12 @@
     
     <!-- Hero Section -->
     <section class="hero-section">
-      <img src="logo.jpg" alt="Hacktivators Logo" class="hero-logo" onerror="this.src='https://via.placeholder.com/150/00f0ff/800080?text=HACKTIVATORS'">
-      <h1 class="main-title">HACKTIVATORS</h1>
-      <p class="tagline" data-en="INNOVATION • TECHNOLOGY • IMPACT" data-ar="ابتكار • تكنولوجيا • أثر">INNOVATION • TECHNOLOGY • IMPACT</p>
+      <img src="logo.jpg" alt="Hacktivators Logo" class="hero-logo" data-aos="zoom-in" data-aos-duration="1000" onerror="this.src='https://via.placeholder.com/150/00f0ff/800080?text=HACKTIVATORS'">
+      <h1 class="main-title" data-aos="fade-up" data-aos-duration="900">HACKTIVATORS</h1>
+      <p class="tagline" data-en="INNOVATION • TECHNOLOGY • IMPACT" data-ar="ابتكار • تكنولوجيا • أثر" data-aos="fade-up" data-aos-delay="150" data-aos-duration="900">INNOVATION • TECHNOLOGY • IMPACT</p>
       
       <!-- Team Card Panel -->
-      <div class="team-card">
+      <div class="team-card" data-aos="fade-up" data-aos-delay="300" data-aos-duration="900">
         <h3 data-en="Project Leader & Contact" data-ar="رائدة المشروع والتواصل">Project Leader & Contact</h3>
         <p><strong>Celia Ahmed</strong> (<a href="tel:01205147642">01205147642</a>)</p>
         
@@ -420,16 +458,16 @@
       </div>
 
       <!-- Live Counter Panel -->
-      <div class="counter-box">
+      <div class="counter-box" data-aos="fade-up" data-aos-delay="450" data-aos-duration="900">
         <h3 data-en="Registered Students" data-ar="عدد الطلاب المسجلين حتى الآن">Registered Students</h3>
         <div id="student-counter" class="counter-number">0</div>
       </div>
 
-      <a href="#register-section" class="join-btn" data-en="JOIN US" data-ar="انضم إلينا">JOIN US</a>
+      <a href="#register-section" class="join-btn" data-en="JOIN US" data-ar="انضم إلينا" data-aos="zoom-in" data-aos-delay="600">JOIN US</a>
     </section>
 
     <!-- Registration Form Section -->
-    <section id="register-section" class="form-section">
+    <section id="register-section" class="form-section" data-aos="fade-up" data-aos-duration="1000">
       <h2 data-en="Workshop Registration" data-ar="التسجيل في الورشة">Workshop Registration</h2>
       <form id="registration-form" onsubmit="handleRegistration(event)">
         <div class="input-group">
@@ -470,121 +508,13 @@
 
   </main>
 
-  <!-- JavaScript Application Logic -->
+  <!-- AOS Animation Script CDN -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    // Firebase Configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyBOun36sO0FR2Tk9Vz-WD4_VuOyEwqdQJQ",
-      authDomain: "hacktivators.firebaseapp.com",
-      projectId: "hacktivators",
-      storageBucket: "hacktivators.firebasestorage.app",
-      messagingSenderId: "384549852638",
-      appId: "1:384549852638:web:76717d7992130a7508794f",
-      measurementId: "G-KMEYBBL5PT"
-    };
-
-    // Initialize Firebase safely
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    }
-    const db = firebase.firestore();
-
-    let currentLang = 'en';
-
-    // Bilingual Language Toggle Function
-    function toggleLanguage() {
-      const htmlTag = document.documentElement;
-      const langBtn = document.getElementById('lang-toggle-btn');
-
-      if (currentLang === 'en') {
-        currentLang = 'ar';
-        htmlTag.setAttribute('dir', 'rtl');
-        htmlTag.setAttribute('lang', 'ar');
-        langBtn.textContent = 'Switch to English 🇬🇧';
-      } else {
-        currentLang = 'en';
-        htmlTag.setAttribute('dir', 'ltr');
-        htmlTag.setAttribute('lang', 'en');
-        langBtn.textContent = 'تغيير إلى العربية 🇪🇬';
-      }
-
-      const elements = document.querySelectorAll('[data-en][data-ar]');
-      elements.forEach(el => {
-        el.textContent = el.getAttribute(`data-${currentLang}`);
-      });
-    }
-
-    // Live Real-Time Student Counter Firestore Listener
-    function listenToCounter() {
-      db.collection("students").onSnapshot((snapshot) => {
-        const counterElement = document.getElementById("student-counter");
-        if(counterElement) {
-          counterElement.textContent = snapshot.size;
-        }
-      }, (err) => {
-        console.error("Firestore Counter Sync Error: ", err);
-      });
-    }
-
-    // Generate Unique Verification Code
-    function generateStudentCode() {
-      return "HT-" + Math.floor(1000 + Math.random() * 9000);
-    }
-
-    // Registration Form Submission Handler
-    function handleRegistration(e) {
-      e.preventDefault();
-      
-      const submitBtn = document.getElementById("submitBtn");
-      submitBtn.disabled = true;
-      submitBtn.textContent = currentLang === 'en' ? "Registering..." : "جاري التسجيل...";
-
-      const name = document.getElementById('studentName').value.trim();
-      const email = document.getElementById('studentEmail').value.trim();
-      const phone = document.getElementById('studentPhone').value.trim();
-      const parentPhone = document.getElementById('parentPhone').value.trim();
-      const studentCode = generateStudentCode();
-
-      // Push record to Firestore Database
-      db.collection("students").add({
-        studentCode: studentCode,
-        fullName: name,
-        email: email,
-        studentPhone: phone,
-        parentPhone: parentPhone,
-        registeredAt: firebase.firestore.FieldValue.serverTimestamp(),
-        attended: false
-      }).then((docRef) => {
-        // Cache session identifiers locally
-        localStorage.setItem("hacktivators_student_id", docRef.id);
-        localStorage.setItem("hacktivators_student_code", studentCode);
-        localStorage.setItem("hacktivators_student_email", email);
-
-        alert(currentLang === 'en' 
-          ? `Registration Successful! Your Student Code is #${studentCode}` 
-          : `تم التسجيل بنجاح! كود الطالب الخاص بك هو #${studentCode}`);
-
-        document.getElementById('register-section').classList.add('hidden');
-        document.getElementById('timetable-section').classList.remove('hidden');
-        document.getElementById('timetable-section').scrollIntoView({ behavior: 'smooth' });
-      }).catch((error) => {
-        console.error("Firestore Write Error: ", error);
-        alert(currentLang === 'en' ? "Registration Failed. Please try again." : "حدث خطأ أثناء التسجيل، يجدر المحاولة مجدداً.");
-        submitBtn.disabled = false;
-        submitBtn.textContent = currentLang === 'en' ? "Register Now" : "سجّل الآن";
-      });
-    }
-
-    // Navigation trigger to Dashboard page
-    function goToDashboard() {
-      window.location.href = "https://yelkhawaga-oss.github.io/hacktivators-dashboard/";
-    }
-
-    // Initialize listeners on load
-    window.onload = function() {
-      listenToCounter();
-    };
+    AOS.init({
+      once: true,
+      offset: 50
+    });
   </script>
 </body>
-          </html>
-          
+</html>
