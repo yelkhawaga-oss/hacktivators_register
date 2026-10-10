@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hacktivators | Workshop Registration</title>
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Firebase SDKs (Compat Version for Easy Browser Integration) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+  <!-- Navigation / Language Switcher -->
+  <header class="top-bar">
+    <div class="logo-container">
+      <img src="logo.jpg" alt="Hacktivators Logo" class="nav-logo">
+      <span class="brand-name">HACKTIVATORS</span>
+    </div>
+    <button id="lang-toggle-btn" onclick="toggleLanguage()">تغيير إلى العربية 🇪🇬</button>
+  </header>
+
+  <main class="container">
+    <!-- Hero & Team Section -->
+    <section class="hero-section">
+      <img src="logo.jpg" alt="Hacktivators Logo" class="hero-logo">
+      <h1 class="main-title">HACKTIVATORS</h1>
+      <p class="tagline" data-en="INNOVATION • TECHNOLOGY • IMPACT" data-ar="ابتكار • تكنولوجيا • أثر">INNOVATION • TECHNOLOGY • IMPACT</p>
+      
+      <!-- Team Card -->
+      <div class="team-card">
+        <h3 data-en="Project Leader" data-ar="رائدة المشروع والتواصل">Project Leader</h3>
+        <p><strong>Celia Ahmed</strong> (<a href="mailto:hacktivators5@gmail.com">hacktivators5@gmail.com</a>)</p>
+        
+        <h4 data-en="Team Members" data-ar="أعضاء الفريق">Team Members</h4>
+        <ul class="team-list">
+          <li>Tala Ahmed</li>
+          <li>Sagda Ahmed</li>
+          <li>Omar Mostafa</li>
+          <li>Saleen Ahmed</li>
+          <li>Adam Hussein</li>
+        </ul>
+      </div>
+
+      <!-- Live Counter -->
+      <div class="counter-box">
+        <h3 data-en="Registered Students" data-ar="عدد الطلاب المسجلين حتى الآن">Registered Students</h3>
+        <div id="student-counter" class="counter-number">0</div>
+      </div>
+
+      <a href="#register-section" class="join-btn" data-en="JOIN US" data-ar="انضم إلينا">JOIN US</a>
+    </section>
+
+    <!-- Registration Form -->
+    <section id="register-section" class="form-section">
+      <h2 data-en="Workshop Registration" data-ar="التسجيل في الورشة">Workshop Registration</h2>
+      <form id="registration-form" onsubmit="handleRegistration(event)">
+        <div class="input-group">
+          <label data-en="Full Name" data-ar="الاسم بالكامل">Full Name</label>
+          <input type="text" id="studentName" required placeholder="Ex: Omar Mostafa">
+        </div>
+        <div class="input-group">
+          <label data-en="Student Email" data-ar="إيميل الطالب">Student Email</label>
+          <input type="email" id="studentEmail" required placeholder="student@example.com">
+        </div>
+        <div class="input-group">
+          <label data-en="Student Phone Number" data-ar="رقم هاتف الطالب">Student Phone Number</label>
+          <input type="tel" id="studentPhone" required placeholder="01xxxxxxxx">
+        </div>
+        <div class="input-group">
+          <label data-en="Parent Phone Number" data-ar="رقم ولي الأمر">Parent Phone Number</label>
+          <input type="tel" id="parentPhone" required placeholder="01xxxxxxxx">
+        </div>
+        <button type="submit" class="submit-btn" id="submitBtn" data-en="Register Now" data-ar="سجّل الآن">Register Now</button>
+      </form>
+    </section>
+
+    <!-- Post-Registration Timetable Section -->
+    <section id="timetable-section" class="timetable-section hidden">
+      <div class="timetable-header">
+        <h2 data-en="Hack-Day Timetable" data-ar="جدول الورشة (Hack-Day)">Hack-Day Timetable</h2>
+        <p class="screenshot-note" data-en="📸 Take a screenshot or Swipe Up / Click below to view your Dashboard" data-ar="📸 خذ لقطة شاشة (Screenshot) أو اضغط بالأسفل للانتقال لصفحتك">📸 Take a screenshot or Swipe Up / Click below to view your Dashboard</p>
+      </div>
+
+      <div class="schedule-image-wrapper">
+        <img src="timetable.jpg" alt="Hack-Day Schedule" class="schedule-img">
+      </div>
+
+      <div class="swipe-indicator" onclick="goToDashboard()">
+        <span data-en="Click / Swipe Up to Go to Student Dashboard ⬆️" data-ar="اضغط هنا / اسحب لأعلى للانتقال لصفحة الطالب ⬆️">Click / Swipe Up to Go to Student Dashboard ⬆️</span>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
