@@ -3,29 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hacktivators | Workshop Registration Platform</title>
+  <title>Hacktivators | Professional Cyber Registration Platform</title>
   
-  <!-- Firebase SDKs (Compat Version) -->
+  <!-- ==========================================================================
+       EXTERNAL DEPENDENCIES & SDKS (FIREBASE & AOS ANIMATIONS)
+       ========================================================================== -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-  
-  <!-- AOS Animation Library CDN -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
   <style>
-    /* ==========================================
-       HACKTIVATORS - MASTER DESIGN SYSTEM CSS
-       ========================================== */
+    /* ==========================================================================
+       HACKTIVATORS - MASTER CYBERPUNK DESIGN SYSTEM & ARCHITECTURE
+       ========================================================================== */
     :root {
-      --bg-color: #05070d;
-      --card-bg: rgba(12, 16, 32, 0.9);
+      --bg-color: #04060b;
+      --card-bg: rgba(10, 14, 28, 0.92);
       --primary-cyan: #00f0ff;
       --accent-purple: #7928ca;
       --accent-pink: #ff0080;
       --text-main: #ffffff;
       --text-muted: #94a3b8;
       --border-color: rgba(0, 240, 255, 0.3);
-      --transition-speed: 0.3s;
+      --glow-cyan: 0 0 25px rgba(0, 240, 255, 0.5);
+      --glow-pink: 0 0 25px rgba(255, 0, 128, 0.5);
+      --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     * {
@@ -43,22 +45,22 @@
       flex-direction: column;
       align-items: center;
       background-image: 
-        radial-gradient(circle at 15% 15%, rgba(121, 40, 202, 0.12) 0%, transparent 45%),
-        radial-gradient(circle at 85% 85%, rgba(0, 240, 255, 0.08) 0%, transparent 45%);
+        radial-gradient(circle at 10% 10%, rgba(121, 40, 202, 0.15) 0%, transparent 45%),
+        radial-gradient(circle at 90% 90%, rgba(0, 240, 255, 0.1) 0%, transparent 45%);
       overflow-x: hidden;
     }
 
-    /* --- Top Navigation Bar --- */
+    /* --- Top Navigation Bar Component --- */
     .top-bar {
       width: 100%;
-      max-width: 1100px;
+      max-width: 1200px;
       padding: 18px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid var(--border-color);
-      background: rgba(5, 7, 13, 0.85);
-      backdrop-filter: blur(12px);
+      background: rgba(4, 6, 11, 0.85);
+      backdrop-filter: blur(15px);
       position: sticky;
       top: 0;
       z-index: 1000;
@@ -67,27 +69,27 @@
     .logo-container {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 15px;
     }
 
     .nav-logo {
-      width: 48px;
-      height: 48px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       border: 2px solid var(--primary-cyan);
       object-fit: cover;
-      box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
-      animation: pulseGlow 3s infinite alternate;
+      box-shadow: var(--glow-cyan);
+      animation: navPulse 3s infinite alternate;
     }
 
-    @keyframes pulseGlow {
-      0% { box-shadow: 0 0 10px rgba(0, 240, 255, 0.4); transform: scale(1); }
-      100% { box-shadow: 0 0 25px rgba(0, 240, 255, 0.8); transform: scale(1.03); }
+    @keyframes navPulse {
+      0% { transform: scale(1); box-shadow: 0 0 10px rgba(0, 240, 255, 0.4); }
+      100% { transform: scale(1.05); box-shadow: 0 0 25px rgba(0, 240, 255, 0.8); }
     }
 
     .brand-name {
       font-weight: 900;
-      font-size: 1.35rem;
+      font-size: 1.4rem;
       letter-spacing: 3px;
       background: linear-gradient(90deg, var(--primary-cyan), #ffffff, var(--accent-pink));
       -webkit-background-clip: text;
@@ -98,57 +100,57 @@
       background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
       color: #fff;
       border: none;
-      padding: 10px 20px;
+      padding: 10px 22px;
       border-radius: 30px;
       cursor: pointer;
       font-weight: 700;
-      font-size: 0.92rem;
-      transition: all var(--transition-speed);
-      box-shadow: 0 0 15px rgba(255, 0, 128, 0.4);
+      font-size: 0.95rem;
+      transition: var(--transition-smooth);
+      box-shadow: var(--glow-pink);
     }
 
     #lang-toggle-btn:hover {
       transform: translateY(-2px) scale(1.05);
-      box-shadow: 0 0 25px rgba(255, 0, 128, 0.7);
+      box-shadow: 0 0 30px rgba(255, 0, 128, 0.8);
     }
 
     /* --- Main Layout Container --- */
     .container {
       width: 90%;
-      max-width: 850px;
+      max-width: 950px;
       margin: 45px auto;
       text-align: center;
     }
 
-    /* --- Hero Section --- */
+    /* --- Hero Section Architecture --- */
     .hero-section {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 45px;
+      margin-bottom: 55px;
     }
 
     .hero-logo {
-      width: 140px;
-      height: 140px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
-      box-shadow: 0 0 35px rgba(0, 240, 255, 0.5);
-      margin-bottom: 22px;
+      box-shadow: var(--glow-cyan);
+      margin-bottom: 25px;
       border: 3px solid var(--primary-cyan);
       object-fit: cover;
-      animation: floatLogo 4s ease-in-out infinite;
+      animation: heroFloat 4s ease-in-out infinite;
     }
 
-    @keyframes floatLogo {
+    @keyframes heroFloat {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      50% { transform: translateY(-12px); }
     }
 
     .main-title {
-      font-size: 3rem;
+      font-size: 3.4rem;
       font-weight: 900;
-      letter-spacing: 5px;
-      margin-bottom: 10px;
+      letter-spacing: 6px;
+      margin-bottom: 12px;
       background: linear-gradient(90deg, var(--primary-cyan), var(--accent-purple), var(--accent-pink));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -156,96 +158,114 @@
 
     .tagline {
       color: var(--text-muted);
-      font-size: 1rem;
-      letter-spacing: 3.5px;
-      margin-bottom: 35px;
+      font-size: 1.1rem;
+      letter-spacing: 4px;
+      margin-bottom: 45px;
       font-weight: 600;
     }
 
-    /* --- Team Card Panel --- */
-    .team-card {
+    /* --- Team Cards Grid (Individual Cards Component Architecture) --- */
+    .team-section-title {
+      color: var(--primary-cyan);
+      font-size: 1.6rem;
+      margin-bottom: 25px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
       width: 100%;
+      margin-bottom: 45px;
+    }
+
+    .team-card-item {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-radius: 24px;
-      padding: 28px;
-      margin-bottom: 35px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(10px);
-      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(12px);
+      transition: var(--transition-smooth);
+      position: relative;
+      overflow: hidden;
     }
 
-    .team-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 50px rgba(0, 240, 255, 0.2);
+    .team-card-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--primary-cyan), transparent);
+      opacity: 0;
+      transition: opacity var(--transition-smooth);
     }
 
-    .team-card h3 {
-      color: var(--primary-cyan);
-      font-size: 1.15rem;
-      margin-top: 12px;
+    .team-card-item:hover {
+      transform: translateY(-6px);
+      border-color: var(--primary-cyan);
+      box-shadow: 0 15px 45px rgba(0, 240, 255, 0.25);
+    }
+
+    .team-card-item:hover::before {
+      opacity: 1;
+    }
+
+    .team-card-item.leader {
+      border: 2px solid var(--accent-pink);
+      background: linear-gradient(135deg, rgba(255, 0, 128, 0.08), rgba(10, 14, 28, 0.95));
+      box-shadow: var(--glow-pink);
+    }
+
+    .member-role {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent-pink);
+      font-weight: 700;
       margin-bottom: 8px;
     }
 
-    .team-card p {
-      font-size: 1.05rem;
-      color: #f1f5f9;
+    .team-card-item.leader .member-role {
+      color: var(--primary-cyan);
     }
 
-    .team-card a {
-      color: var(--accent-pink);
+    .member-name {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .member-contact a {
+      color: var(--primary-cyan);
       text-decoration: none;
       font-weight: 700;
-      transition: color var(--transition-speed);
+      font-size: 0.95rem;
+      transition: color var(--transition-smooth);
     }
 
-    .team-card a:hover {
-      color: var(--primary-cyan);
+    .member-contact a:hover {
+      color: var(--accent-pink);
+      text-decoration: underline;
     }
 
-    .team-card h4 {
-      color: var(--primary-cyan);
-      margin-top: 22px;
-      margin-bottom: 14px;
-      font-size: 1.05rem;
-    }
-
-    .team-list {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-    }
-
-    .team-list li {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 9px 18px;
-      border-radius: 25px;
-      border: 1px solid rgba(0, 240, 255, 0.2);
-      font-size: 0.92rem;
-      color: #e2e8f0;
-      font-weight: 600;
-      box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.05);
-      transition: all 0.2s ease;
-    }
-
-    .team-list li:hover {
-      background: rgba(0, 240, 255, 0.15);
-      border-color: var(--primary-cyan);
-      transform: scale(1.05);
-    }
-
-    /* --- Live Counter Panel --- */
+    /* --- Live Counter Panel Component --- */
     .counter-box {
       width: 100%;
       background: rgba(255, 0, 128, 0.06);
       border: 1px solid rgba(255, 0, 128, 0.35);
       border-radius: 24px;
-      padding: 24px;
-      margin-bottom: 35px;
-      box-shadow: 0 0 25px rgba(255, 0, 128, 0.12);
-      transition: transform var(--transition-speed);
+      padding: 28px;
+      margin-bottom: 45px;
+      box-shadow: var(--glow-pink);
+      transition: var(--transition-smooth);
     }
 
     .counter-box:hover {
@@ -253,49 +273,49 @@
     }
 
     .counter-box h3 {
-      font-size: 1.05rem;
+      font-size: 1.15rem;
       color: #f472b6;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       font-weight: 700;
     }
 
     .counter-number {
-      font-size: 3.2rem;
+      font-size: 3.8rem;
       font-weight: 900;
       color: var(--primary-cyan);
-      text-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+      text-shadow: var(--glow-cyan);
     }
 
-    /* --- Call to Action Button --- */
+    /* --- Call To Action Join Button Component --- */
     .join-btn {
       display: inline-block;
       background: linear-gradient(90deg, var(--primary-cyan), var(--accent-purple));
       color: #fff;
       text-decoration: none;
-      padding: 16px 45px;
-      font-size: 1.2rem;
+      padding: 18px 55px;
+      font-size: 1.3rem;
       font-weight: 800;
       border-radius: 40px;
-      box-shadow: 0 0 25px rgba(0, 240, 255, 0.45);
-      transition: all var(--transition-speed);
+      box-shadow: var(--glow-cyan);
+      transition: var(--transition-smooth);
     }
 
     .join-btn:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 0 35px rgba(0, 240, 255, 0.8);
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 0 45px rgba(0, 240, 255, 0.9);
     }
 
-    /* --- Form Section Panel --- */
+    /* --- Registration Form Section Architecture --- */
     .form-section {
       width: 100%;
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 28px;
-      padding: 40px;
-      margin-top: 25px;
+      padding: 50px;
+      margin-top: 35px;
       text-align: left;
-      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(15px);
     }
 
     [dir="rtl"] .form-section {
@@ -305,124 +325,66 @@
     .form-section h2 {
       text-align: center;
       color: var(--primary-cyan);
-      margin-bottom: 30px;
-      font-size: 2rem;
+      margin-bottom: 40px;
+      font-size: 2.3rem;
       font-weight: 900;
+      letter-spacing: 1px;
     }
 
     .input-group {
-      margin-bottom: 22px;
+      margin-bottom: 26px;
     }
 
     .input-group label {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       color: #e2e8f0;
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 700;
     }
 
     .input-group input {
       width: 100%;
-      padding: 15px 18px;
+      padding: 17px 22px;
       border-radius: 14px;
       border: 1px solid rgba(255, 255, 255, 0.18);
-      background: #030409;
+      background: #020307;
       color: #fff;
-      font-size: 1.05rem;
+      font-size: 1.15rem;
       outline: none;
-      transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+      transition: var(--transition-smooth);
     }
 
     .input-group input:focus {
       border-color: var(--primary-cyan);
-      box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+      box-shadow: var(--glow-cyan);
     }
 
     .submit-btn {
       width: 100%;
-      padding: 16px;
+      padding: 19px;
       background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple));
       color: #fff;
       border: none;
       border-radius: 14px;
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       font-weight: 800;
       cursor: pointer;
-      margin-top: 12px;
-      transition: all var(--transition-speed);
-      box-shadow: 0 0 25px rgba(255, 0, 128, 0.45);
+      margin-top: 15px;
+      transition: var(--transition-smooth);
+      box-shadow: var(--glow-pink);
     }
 
     .submit-btn:hover {
       opacity: 0.95;
       transform: translateY(-2px);
-      box-shadow: 0 0 35px rgba(255, 0, 128, 0.7);
-    }
-
-    /* --- Timetable / Success Section --- */
-    .timetable-section {
-      margin-top: 45px;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 28px;
-      padding: 35px;
-      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(10px);
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .screenshot-note {
-      color: var(--accent-pink);
-      margin: 14px 0 22px;
-      font-weight: 800;
-      font-size: 1.1rem;
-    }
-
-    .schedule-image-wrapper {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 25px;
-    }
-
-    .schedule-img {
-      width: 100%;
-      max-width: 680px;
-      border-radius: 18px;
-      border: 2px solid var(--primary-cyan);
-      box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
-      transition: transform 0.3s ease;
-    }
-
-    .schedule-img:hover {
-      transform: scale(1.02);
-    }
-
-    .swipe-indicator {
-      margin-top: 25px;
-      padding: 18px;
-      background: rgba(0, 240, 255, 0.08);
-      border: 1.5px dashed var(--primary-cyan);
-      border-radius: 16px;
-      cursor: pointer;
-      font-weight: 800;
-      color: var(--primary-cyan);
-      transition: background var(--transition-speed), transform var(--transition-speed);
-    }
-
-    .swipe-indicator:hover {
-      background: rgba(0, 240, 255, 0.2);
-      transform: scale(1.02);
+      box-shadow: 0 0 45px rgba(255, 0, 128, 0.8);
     }
   </style>
 </head>
 <body>
 
-  <!-- Navigation Bar -->
+  <!-- Top Navigation Bar Component -->
   <header class="top-bar" data-aos="fade-down" data-aos-duration="800">
     <div class="logo-container">
       <img src="logo.jpg" alt="Hacktivators Logo" class="nav-logo" onerror="this.style.display='none'">
@@ -431,42 +393,80 @@
     <button id="lang-toggle-btn" onclick="toggleLanguage()">تغيير إلى العربية 🇪🇬</button>
   </header>
 
-  <!-- Main Container -->
+  <!-- Main Content Container -->
   <main class="container">
     
-    <!-- Hero Section -->
+    <!-- Hero Section Component -->
     <section class="hero-section">
       <img src="logo.jpg" alt="Hacktivators Logo" class="hero-logo" data-aos="zoom-in" data-aos-duration="1000" onerror="this.src='https://via.placeholder.com/150/00f0ff/800080?text=HACKTIVATORS'">
       <h1 class="main-title" data-aos="fade-up" data-aos-duration="900">HACKTIVATORS</h1>
       <p class="tagline" data-en="INNOVATION • TECHNOLOGY • IMPACT" data-ar="ابتكار • تكنولوجيا • أثر" data-aos="fade-up" data-aos-delay="150" data-aos-duration="900">INNOVATION • TECHNOLOGY • IMPACT</p>
       
-      <!-- Team Card Panel -->
-      <div class="team-card" data-aos="fade-up" data-aos-delay="300" data-aos-duration="900">
-        <h3 data-en="Project Leader & Contact" data-ar="رائدة المشروع والتواصل">Project Leader & Contact</h3>
-        <p><strong>Celia Ahmed</strong> (<a href="tel:01205147642">01205147642</a>)</p>
+      <!-- Team Members Grid (Individual Cards Component Architecture) -->
+      <h3 class="team-section-title" data-en="Meet Our Team" data-ar="فريق العمل المتميز" data-aos="fade-up">Meet Our Team</h3>
+      <div class="team-grid" data-aos="fade-up" data-aos-delay="200">
         
-        <h4 data-en="Team Members" data-ar="أعضاء الفريق">Team Members</h4>
-        <ul class="team-list">
-          <li>Tala Ahmed</li>
-          <li>Sagda Ahmed</li>
-          <li>Omar Mostafa</li>
-          <li>Saleen Ahmed</li>
-          <li>Adam Hussein</li>
-          <li>Lamar Mohsen</li>
-          <li>Youssef Khaled</li>
-        </ul>
+        <!-- Leader Card -->
+        <div class="team-card-item leader">
+          <div class="member-role" data-en="Project Leader" data-ar="رائدة المشروع">Project Leader</div>
+          <div class="member-name">Celia Ahmed</div>
+          <div class="member-contact"><a href="tel:01205147642">01205147642</a></div>
+        </div>
+
+        <!-- Member 1: Tala Ahmed -->
+        <div class="team-card-item">
+          <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
+          <div class="member-name">Tala Ahmed</div>
+        </div>
+
+        <!-- Member 2: Sagda Ahmed -->
+        <div class="team-card-item">
+          <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
+          <div class="member-name">Sagda Ahmed</div>
+        </div>
+
+        <!-- Member 3: Omar Mostafa -->
+        <div class="team-card-item">
+          <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
+          <div class="member-name">Omar Mostafa</div>
+        </div>
+
+        <!-- Member 4: Saleen Ahmed -->
+        <div class="team-card-item">
+          <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
+          <div class="member-name">Saleen Ahmed</div>
+        </div>
+
+        <!-- Member 5: Adam Hussein -->
+        <div class="team-card-item">
+          <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
+          <div class="member-name">Adam Hussein</div>
+        </div>
+
+        <!-- Member 6: Lamar Mohsen -->
+        <div class="team-card-item">
+          <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
+          <div class="member-name">Lamar Mohsen</div>
+        </div>
+
+        <!-- Member 7: Youssef Khaled -->
+        <div class="team-card-item">
+          <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
+          <div class="member-name">Youssef Khaled</div>
+        </div>
+
       </div>
 
-      <!-- Live Counter Panel -->
-      <div class="counter-box" data-aos="fade-up" data-aos-delay="450" data-aos-duration="900">
+      <!-- Live Firestore Counter Panel Component -->
+      <div class="counter-box" data-aos="fade-up" data-aos-delay="300" data-aos-duration="900">
         <h3 data-en="Registered Students" data-ar="عدد الطلاب المسجلين حتى الآن">Registered Students</h3>
         <div id="student-counter" class="counter-number">0</div>
       </div>
 
-      <a href="#register-section" class="join-btn" data-en="JOIN US" data-ar="انضم إلينا" data-aos="zoom-in" data-aos-delay="600">JOIN US</a>
+      <a href="#register-section" class="join-btn" data-en="JOIN US" data-ar="انضم إلينا" data-aos="zoom-in" data-aos-delay="400">JOIN US</a>
     </section>
 
-    <!-- Registration Form Section -->
+    <!-- Registration Form Section Architecture -->
     <section id="register-section" class="form-section" data-aos="fade-up" data-aos-duration="1000">
       <h2 data-en="Workshop Registration" data-ar="التسجيل في الورشة">Workshop Registration</h2>
       <form id="registration-form" onsubmit="handleRegistration(event)">
@@ -489,32 +489,118 @@
         <button type="submit" class="submit-btn" id="submitBtn" data-en="Register Now" data-ar="سجّل الآن">Register Now</button>
       </form>
     </section>
-
-    <!-- Post-Registration Timetable Section -->
-    <section id="timetable-section" class="timetable-section hidden">
-      <div class="timetable-header">
-        <h2 data-en="Hack-Day Timetable" data-ar="جدول الورشة (Hack-Day)">Hack-Day Timetable</h2>
-        <p class="screenshot-note" data-en="📸 Take a screenshot or Click below to view your Dashboard" data-ar="📸 خذ لقطة شاشة (Screenshot) أو اضغط بالأسفل للانتقال لصفحتك">📸 Take a screenshot or Click below to view your Dashboard</p>
-      </div>
-
-      <div class="schedule-image-wrapper">
-        <img src="timetable.jpg" alt="Hack-Day Schedule" class="schedule-img" onerror="this.src='https://via.placeholder.com/680x450/0c1020/00f0ff?text=Timetable+Image+Ready'">
-      </div>
-
-      <div class="swipe-indicator" onclick="goToDashboard()">
-        <span data-en="Click to Go to Student Dashboard ⬆️" data-ar="اضغط هنا للانتقال لصفحة الطالب ⬆️">Click to Go to Student Dashboard ⬆️</span>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- AOS Animation Script CDN -->
+  <!-- ========================================================================== -->
+  <!-- CLIENT-SIDE JAVASCRIPT LOGIC & FIREBASE SYNCHRONIZATION                    -->
+  <!-- ========================================================================== -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    AOS.init({
-      once: true,
-      offset: 50
+    // Initialize AOS Library smoothly across all viewport sizes
+    AOS.init({ once: true, offset: 50 });
+
+    // Firebase Core Configuration Setup for Hacktivators Platform
+    const firebaseConfig = {
+      apiKey: "AIzaSyBOun36sO0FR2Tk9Vz-WD4_VuOyEwqdQJQ",
+      authDomain: "hacktivators.firebaseapp.com",
+      projectId: "hacktivators",
+      storageBucket: "hacktivators.firebasestorage.app",
+      messagingSenderId: "384549852638",
+      appId: "1:384549852638:web:76717d7992130a7508794f",
+      measurementId: "G-KMEYBBL5PT"
+    };
+
+    // Initialize Firebase Safely without redeclaring active instances
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.firestore();
+
+    let currentLang = 'en';
+
+    // Robust Bilingual Language Toggle Implementation (EN / AR)
+    function toggleLanguage() {
+      const htmlTag = document.documentElement;
+      const langBtn = document.getElementById('lang-toggle-btn');
+
+      if (currentLang === 'en') {
+        currentLang = 'ar';
+        htmlTag.setAttribute('dir', 'rtl');
+        htmlTag.setAttribute('lang', 'ar');
+        langBtn.textContent = 'Switch to English 🇬🇧';
+      } else {
+        currentLang = 'en';
+        htmlTag.setAttribute('dir', 'ltr');
+        htmlTag.setAttribute('lang', 'en');
+        langBtn.textContent = 'تغيير إلى العربية 🇪🇬';
+      }
+
+      const elements = document.querySelectorAll('[data-en][data-ar]');
+      elements.forEach(el => {
+        el.textContent = el.getAttribute(`data-${currentLang}`);
+      });
+    }
+
+    // Real-Time Student Counter Firestore onSnapshot Synchronization Listener
+    db.collection("students").onSnapshot((snapshot) => {
+      const counterElement = document.getElementById("student-counter");
+      if(counterElement) {
+        counterElement.textContent = snapshot.size;
+      }
+    }, (err) => {
+      console.error("Firestore Counter Sync Error: ", err);
     });
+
+    // Generate Unique Verification Code System for Registered Students
+    function generateStudentCode() {
+      return "HT-" + Math.floor(1000 + Math.random() * 9000);
+    }
+
+    // Registration Form Handler & Dashboard Navigation Redirect Logic
+    function handleRegistration(e) {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById("submitBtn");
+      submitBtn.disabled = true;
+      submitBtn.textContent = currentLang === 'en' ? "Registering..." : "جاري التسجيل...";
+
+      const name = document.getElementById('studentName').value.trim();
+      const email = document.getElementById('studentEmail').value.trim();
+      const phone = document.getElementById('studentPhone').value.trim();
+      const parentPhone = document.getElementById('parentPhone').value.trim();
+      const studentCode = generateStudentCode();
+
+      // Write submission payload directly into Firestore students collection securely
+      db.collection("students").add({
+        studentCode: studentCode,
+        fullName: name,
+        email: email,
+        studentPhone: phone,
+        parentPhone: parentPhone,
+        registeredAt: firebase.firestore.FieldValue.serverTimestamp(),
+        attended: false
+      }).then((docRef) => {
+        // Cache user session parameters locally for downstream Dashboard consumption
+        localStorage.setItem("hacktivators_student_id", docRef.id);
+        localStorage.setItem("hacktivators_student_code", studentCode);
+        localStorage.setItem("hacktivators_student_name", name);
+        localStorage.setItem("hacktivators_student_email", email);
+        localStorage.setItem("hacktivators_student_phone", phone);
+
+        alert(currentLang === 'en' 
+          ? `Registration Successful! Your Unique Code is #${studentCode}` 
+          : `تم التسجيل بنجاح! كود الطالب الخاص بك هو #${studentCode}`);
+
+        // Direct automated transition to the student dashboard page
+        window.location.href = "dashboard.html";
+      }).catch((error) => {
+        console.error("Firestore Document Write Error: ", error);
+        alert(currentLang === 'en' ? "Registration Failed. Please try again." : "حدث خطأ أثناء التسجيل، يجدر المحاولة مجدداً.");
+        submitBtn.disabled = false;
+        submitBtn.textContent = currentLang === 'en' ? "Register Now" : "سجّل الآن";
+      });
+    }
   </script>
 </body>
 </html>
+
+  </main>
+  
