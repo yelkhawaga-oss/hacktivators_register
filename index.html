@@ -3,19 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hacktivators | Professional Cyber Registration Platform & Workshop Portal</title>
+  <title>Hacktivators | Professional Cyber Registration Platform</title>
   
-  <!-- ==========================================================================
-       EXTERNAL DEPENDENCIES & SDKS (FIREBASE & AOS ANIMATIONS)
-       ========================================================================== -->
+  <!-- Firebase SDKs (Compat Version) -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  
+  <!-- AOS Animation Library CDN -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
   <style>
-    /* ==========================================================================
-       HACKTIVATORS - MASTER CYBERPUNK DESIGN SYSTEM & ARCHITECTURE v4.0
-       ========================================================================== */
     :root {
       --bg-color: #04060b;
       --card-bg: rgba(10, 14, 28, 0.92);
@@ -50,7 +47,6 @@
       overflow-x: hidden;
     }
 
-    /* --- Top Navigation Bar Component --- */
     .top-bar {
       width: 100%;
       max-width: 1200px;
@@ -114,7 +110,6 @@
       box-shadow: 0 0 30px rgba(255, 0, 128, 0.8);
     }
 
-    /* --- Main Layout Container --- */
     .container {
       width: 90%;
       max-width: 950px;
@@ -122,7 +117,6 @@
       text-align: center;
     }
 
-    /* --- Hero Section Architecture --- */
     .hero-section {
       display: flex;
       flex-direction: column;
@@ -164,7 +158,6 @@
       font-weight: 600;
     }
 
-    /* --- Team Cards Grid (Individual Cards Component Architecture) --- */
     .team-section-title {
       color: var(--primary-cyan);
       font-size: 1.6rem;
@@ -256,7 +249,6 @@
       text-decoration: underline;
     }
 
-    /* --- Live Counter Panel Component --- */
     .counter-box {
       width: 100%;
       background: rgba(255, 0, 128, 0.06);
@@ -286,7 +278,6 @@
       text-shadow: var(--glow-cyan);
     }
 
-    /* --- Call To Action Join Button Component --- */
     .join-btn {
       display: inline-block;
       background: linear-gradient(90deg, var(--primary-cyan), var(--accent-purple));
@@ -305,7 +296,6 @@
       box-shadow: 0 0 45px rgba(0, 240, 255, 0.9);
     }
 
-    /* --- Registration Form Section Architecture --- */
     .form-section {
       width: 100%;
       background: var(--card-bg);
@@ -328,7 +318,6 @@
       margin-bottom: 40px;
       font-size: 2.3rem;
       font-weight: 900;
-      letter-spacing: 1px;
     }
 
     .input-group {
@@ -381,7 +370,6 @@
       box-shadow: 0 0 45px rgba(255, 0, 128, 0.8);
     }
 
-    /* --- Extended Sections Styles (Rules & FAQ) --- */
     .extended-section {
       width: 100%;
       background: var(--card-bg);
@@ -409,7 +397,6 @@
 </head>
 <body>
 
-  <!-- Top Navigation Bar Component -->
   <header class="top-bar" data-aos="fade-down" data-aos-duration="800">
     <div class="logo-container">
       <img src="logo.jpg" alt="Hacktivators Logo" class="nav-logo" onerror="this.style.display='none'">
@@ -418,63 +405,52 @@
     <button id="lang-toggle-btn" onclick="toggleLanguage()">تغيير إلى العربية 🇪🇬</button>
   </header>
 
-  <!-- Main Content Container -->
   <main class="container">
     
-    <!-- Hero Section Component -->
     <section class="hero-section">
       <img src="logo.jpg" alt="Hacktivators Logo" class="hero-logo" data-aos="zoom-in" data-aos-duration="1000" onerror="this.src='https://via.placeholder.com/150/00f0ff/800080?text=HACKTIVATORS'">
       <h1 class="main-title" data-aos="fade-up" data-aos-duration="900">HACKTIVATORS</h1>
       <p class="tagline" data-en="INNOVATION • TECHNOLOGY • IMPACT" data-ar="ابتكار • تكنولوجيا • أثر" data-aos="fade-up" data-aos-delay="150" data-aos-duration="900">INNOVATION • TECHNOLOGY • IMPACT</p>
       
-      <!-- Team Members Grid (Individual Cards Component Architecture) -->
       <h3 class="team-section-title" data-en="Meet Our Team" data-ar="فريق العمل المتميز" data-aos="fade-up">Meet Our Team</h3>
       <div class="team-grid" data-aos="fade-up" data-aos-delay="200">
         
-        <!-- Leader Card -->
         <div class="team-card-item leader">
           <div class="member-role" data-en="Project Leader" data-ar="رائدة المشروع">Project Leader</div>
           <div class="member-name">Celia Ahmed</div>
           <div class="member-contact"><a href="tel:01205147642">01205147642</a></div>
         </div>
 
-        <!-- Member 1 -->
         <div class="team-card-item">
           <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
           <div class="member-name">Tala Ahmed</div>
         </div>
 
-        <!-- Member 2 -->
         <div class="team-card-item">
           <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
           <div class="member-name">Sagda Ahmed</div>
         </div>
 
-        <!-- Member 3 -->
         <div class="team-card-item">
           <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
           <div class="member-name">Omar Mostafa</div>
         </div>
 
-        <!-- Member 4 -->
         <div class="team-card-item">
           <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
           <div class="member-name">Saleen Ahmed</div>
         </div>
 
-        <!-- Member 5 -->
         <div class="team-card-item">
           <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
           <div class="member-name">Adam Hussein</div>
         </div>
 
-        <!-- Member 6 -->
         <div class="team-card-item">
           <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
           <div class="member-name">Lamar Mohsen</div>
         </div>
 
-        <!-- Member 7 -->
         <div class="team-card-item">
           <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
           <div class="member-name">Youssef Khaled</div>
@@ -482,7 +458,6 @@
 
       </div>
 
-      <!-- Live Firestore Counter Panel Component -->
       <div class="counter-box" data-aos="fade-up" data-aos-delay="300" data-aos-duration="900">
         <h3 data-en="Registered Students" data-ar="عدد الطلاب المسجلين حتى الآن">Registered Students</h3>
         <div id="student-counter" class="counter-number">0</div>
@@ -491,7 +466,6 @@
       <a href="#register-section" class="join-btn" data-en="JOIN US" data-ar="انضم إلينا" data-aos="zoom-in" data-aos-delay="400">JOIN US</a>
     </section>
 
-    <!-- Registration Form Section Architecture -->
     <section id="register-section" class="form-section" data-aos="fade-up" data-aos-duration="1000">
       <h2 data-en="Workshop Registration" data-ar="التسجيل في الورشة">Workshop Registration</h2>
       <form id="registration-form" onsubmit="handleRegistration(event)">
@@ -515,7 +489,6 @@
       </form>
     </section>
 
-    <!-- Workshop Guidelines & Rules Section -->
     <section class="extended-section" data-aos="fade-up" data-aos-duration="1000">
       <h2 data-en="Workshop Guidelines & Rules" data-ar="تعليمات وشروط الورشة">Workshop Guidelines & Rules</h2>
       <ul style="list-style: none; display: flex; flex-direction: column; gap: 15px; color: #cbd5e1; font-size: 1.05rem;">
@@ -534,7 +507,6 @@
       </ul>
     </section>
 
-    <!-- Frequently Asked Questions Section -->
     <section class="extended-section" data-aos="fade-up" data-aos-duration="1000">
       <h2 data-en="Frequently Asked Questions" data-ar="الأسئلة الشائعة">Frequently Asked Questions</h2>
       <div style="display: flex; flex-direction: column; gap: 20px;">
@@ -551,6 +523,51 @@
 
   </main>
 
-  <!-- Footer Component -->
   <footer style="width: 100%; margin-top: 50px; padding: 25px; text-align: center; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.95rem;">
-    <p data-en="© 2026 Hacktivators Project. All Rights Reserved." data-ar="© 2026 مشروع Hacktivators. جميع الحقوق محفو
+    <p data-en="© 2026 Hacktivators Project. All Rights Reserved." data-ar="© 2026 مشروع Hacktivators. جميع الحقوق محفوظة.">© 2026 Hacktivators Project. All Rights Reserved.</p>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true, offset: 50 });
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBOun36sO0FR2Tk9Vz-WD4_VuOyEwqdQJQ",
+      authDomain: "hacktivators.firebaseapp.com",
+      projectId: "hacktivators",
+      storageBucket: "hacktivators.firebasestorage.app",
+      messagingSenderId: "384549852638",
+      appId: "1:384549852638:web:76717d7992130a7508794f",
+      measurementId: "G-KMEYBBL5PT"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.firestore();
+
+    let currentLang = 'en';
+
+    function toggleLanguage() {
+      const htmlTag = document.documentElement;
+      const langBtn = document.getElementById('lang-toggle-btn');
+
+      if (currentLang === 'en') {
+        currentLang = 'ar';
+        htmlTag.setAttribute('dir', 'rtl');
+        htmlTag.setAttribute('lang', 'ar');
+        langBtn.textContent = 'Switch to English 🇬🇧';
+      } else {
+        currentLang = 'en';
+        htmlTag.setAttribute('dir', 'ltr');
+        htmlTag.setAttribute('lang', 'en');
+        langBtn.textContent = 'تغيير إلى العربية 🇪🇬';
+      }
+
+      const elements = document.querySelectorAll('[data-en][data-ar]');
+      elements.forEach(el => {
+        el.textContent = el.getAttribute(`data-${currentLang}`);
+      });
+    }
+
+    db.collection("students").onSnapsh
