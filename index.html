@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hacktivators | Professional Cyber Registration Platform</title>
   
-  <!-- ==========================================================================
-       EXTERNAL DEPENDENCIES & SDKS (FIREBASE & AOS ANIMATIONS)
-       ========================================================================== -->
+  <!-- Firebase SDKs (Compat Version) -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  
+  <!-- AOS Animation Library CDN -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
   <style>
@@ -18,7 +18,7 @@
        ========================================================================== */
     :root {
       --bg-color: #04060b;
-      --card-bg: rgba(10, 14, 28, 0.92);
+      --card-bg: rgba(10, 14, 28, 0.9);
       --primary-cyan: #00f0ff;
       --accent-purple: #7928ca;
       --accent-pink: #ff0080;
@@ -50,7 +50,7 @@
       overflow-x: hidden;
     }
 
-    /* --- Top Navigation Bar Component --- */
+    /* --- Top Navigation Bar Styles --- */
     .top-bar {
       width: 100%;
       max-width: 1200px;
@@ -164,7 +164,7 @@
       font-weight: 600;
     }
 
-    /* --- Team Cards Grid (Individual Cards Component Architecture) --- */
+    /* --- Team Cards Grid (Individual Cards Component) --- */
     .team-section-title {
       color: var(--primary-cyan);
       font-size: 1.6rem;
@@ -256,7 +256,7 @@
       text-decoration: underline;
     }
 
-    /* --- Live Counter Panel Component --- */
+    /* --- Live Counter Panel --- */
     .counter-box {
       width: 100%;
       background: rgba(255, 0, 128, 0.06);
@@ -286,7 +286,7 @@
       text-shadow: var(--glow-cyan);
     }
 
-    /* --- Call To Action Join Button Component --- */
+    /* --- Call To Action Join Button --- */
     .join-btn {
       display: inline-block;
       background: linear-gradient(90deg, var(--primary-cyan), var(--accent-purple));
@@ -380,6 +380,10 @@
       transform: translateY(-2px);
       box-shadow: 0 0 45px rgba(255, 0, 128, 0.8);
     }
+
+    .hidden {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
@@ -402,7 +406,7 @@
       <h1 class="main-title" data-aos="fade-up" data-aos-duration="900">HACKTIVATORS</h1>
       <p class="tagline" data-en="INNOVATION • TECHNOLOGY • IMPACT" data-ar="ابتكار • تكنولوجيا • أثر" data-aos="fade-up" data-aos-delay="150" data-aos-duration="900">INNOVATION • TECHNOLOGY • IMPACT</p>
       
-      <!-- Team Members Grid (Individual Cards Component Architecture) -->
+      <!-- Team Members Grid (Individual Cards Component) -->
       <h3 class="team-section-title" data-en="Meet Our Team" data-ar="فريق العمل المتميز" data-aos="fade-up">Meet Our Team</h3>
       <div class="team-grid" data-aos="fade-up" data-aos-delay="200">
         
@@ -413,43 +417,43 @@
           <div class="member-contact"><a href="tel:01205147642">01205147642</a></div>
         </div>
 
-        <!-- Member 1: Tala Ahmed -->
+        <!-- Member 1 -->
         <div class="team-card-item">
           <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
           <div class="member-name">Tala Ahmed</div>
         </div>
 
-        <!-- Member 2: Sagda Ahmed -->
+        <!-- Member 2 -->
         <div class="team-card-item">
           <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
           <div class="member-name">Sagda Ahmed</div>
         </div>
 
-        <!-- Member 3: Omar Mostafa -->
+        <!-- Member 3 -->
         <div class="team-card-item">
           <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
           <div class="member-name">Omar Mostafa</div>
         </div>
 
-        <!-- Member 4: Saleen Ahmed -->
+        <!-- Member 4 -->
         <div class="team-card-item">
           <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
           <div class="member-name">Saleen Ahmed</div>
         </div>
 
-        <!-- Member 5: Adam Hussein -->
+        <!-- Member 5 -->
         <div class="team-card-item">
           <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
           <div class="member-name">Adam Hussein</div>
         </div>
 
-        <!-- Member 6: Lamar Mohsen -->
+        <!-- Member 6 -->
         <div class="team-card-item">
           <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
           <div class="member-name">Lamar Mohsen</div>
         </div>
 
-        <!-- Member 7: Youssef Khaled -->
+        <!-- Member 7 -->
         <div class="team-card-item">
           <div class="member-role" data-en="Team Member" data-ar="عضو الفريق">Team Member</div>
           <div class="member-name">Youssef Khaled</div>
@@ -489,15 +493,16 @@
         <button type="submit" class="submit-btn" id="submitBtn" data-en="Register Now" data-ar="سجّل الآن">Register Now</button>
       </form>
     </section>
-  <!-- ========================================================================== -->
-  <!-- CLIENT-SIDE JAVASCRIPT LOGIC & FIREBASE SYNCHRONIZATION                    -->
-  <!-- ========================================================================== -->
+
+  </main>
+
+  <!-- AOS Animation Script CDN & Execution Initialization -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    // Initialize AOS Library smoothly across all viewport sizes
+    // Initialize AOS Library smoothly
     AOS.init({ once: true, offset: 50 });
 
-    // Firebase Core Configuration Setup for Hacktivators Platform
+    // Firebase Core Configuration Setup
     const firebaseConfig = {
       apiKey: "AIzaSyBOun36sO0FR2Tk9Vz-WD4_VuOyEwqdQJQ",
       authDomain: "hacktivators.firebaseapp.com",
@@ -508,7 +513,7 @@
       measurementId: "G-KMEYBBL5PT"
     };
 
-    // Initialize Firebase Safely without redeclaring active instances
+    // Initialize Firebase Safely without redeclaring instances
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
@@ -516,7 +521,7 @@
 
     let currentLang = 'en';
 
-    // Robust Bilingual Language Toggle Implementation (EN / AR)
+    // Robust Bilingual Language Toggle Implementation
     function toggleLanguage() {
       const htmlTag = document.documentElement;
       const langBtn = document.getElementById('lang-toggle-btn');
@@ -549,7 +554,7 @@
       console.error("Firestore Counter Sync Error: ", err);
     });
 
-    // Generate Unique Verification Code System for Registered Students
+    // Generate Unique Verification Code System
     function generateStudentCode() {
       return "HT-" + Math.floor(1000 + Math.random() * 9000);
     }
@@ -568,7 +573,7 @@
       const parentPhone = document.getElementById('parentPhone').value.trim();
       const studentCode = generateStudentCode();
 
-      // Write submission payload directly into Firestore students collection securely
+      // Write submission payload directly into Firestore students collection
       db.collection("students").add({
         studentCode: studentCode,
         fullName: name,
@@ -589,7 +594,7 @@
           ? `Registration Successful! Your Unique Code is #${studentCode}` 
           : `تم التسجيل بنجاح! كود الطالب الخاص بك هو #${studentCode}`);
 
-        // Direct automated transition to the student dashboard page
+        // Direct automated transition to dashboard page
         window.location.href = "dashboard.html";
       }).catch((error) => {
         console.error("Firestore Document Write Error: ", error);
@@ -601,6 +606,3 @@
   </script>
 </body>
 </html>
-
-  </main>
-  
