@@ -3,35 +3,409 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hacktivators | Workshop Registration</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Hacktivators | Workshop Registration Platform</title>
   
-  <!-- Firebase SDKs (Compat Version for Easy Browser Integration) -->
+  <!-- Firebase SDKs (Compat Version) -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <style>
+    /* ==========================================
+       HACKTIVATORS - MASTER DESIGN SYSTEM CSS
+       ========================================== */
+    :root {
+      --bg-color: #05070d;
+      --card-bg: rgba(12, 16, 32, 0.9);
+      --primary-cyan: #00f0ff;
+      --accent-purple: #7928ca;
+      --accent-pink: #ff0080;
+      --text-main: #ffffff;
+      --text-muted: #94a3b8;
+      --border-color: rgba(0, 240, 255, 0.3);
+      --transition-speed: 0.3s;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(121, 40, 202, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(0, 240, 255, 0.08) 0%, transparent 45%);
+      overflow-x: hidden;
+    }
+
+    /* --- Top Navigation Bar --- */
+    .top-bar {
+      width: 100%;
+      max-width: 1100px;
+      padding: 18px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      background: rgba(5, 7, 13, 0.85);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .nav-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid var(--primary-cyan);
+      object-fit: cover;
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+    }
+
+    .brand-name {
+      font-weight: 900;
+      font-size: 1.35rem;
+      letter-spacing: 3px;
+      background: linear-gradient(90deg, var(--primary-cyan), #ffffff, var(--accent-pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    #lang-toggle-btn {
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.92rem;
+      transition: all var(--transition-speed);
+      box-shadow: 0 0 15px rgba(255, 0, 128, 0.4);
+    }
+
+    #lang-toggle-btn:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 0 25px rgba(255, 0, 128, 0.7);
+    }
+
+    /* --- Main Layout Container --- */
+    .container {
+      width: 90%;
+      max-width: 850px;
+      margin: 45px auto;
+      text-align: center;
+    }
+
+    /* --- Hero Section --- */
+    .hero-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 45px;
+    }
+
+    .hero-logo {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      box-shadow: 0 0 35px rgba(0, 240, 255, 0.5);
+      margin-bottom: 22px;
+      border: 3px solid var(--primary-cyan);
+      object-fit: cover;
+    }
+
+    .main-title {
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: 5px;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, var(--primary-cyan), var(--accent-purple), var(--accent-pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .tagline {
+      color: var(--text-muted);
+      font-size: 1rem;
+      letter-spacing: 3.5px;
+      margin-bottom: 35px;
+      font-weight: 600;
+    }
+
+    /* --- Team Card Panel --- */
+    .team-card {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 28px;
+      margin-bottom: 35px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+    }
+
+    .team-card h3 {
+      color: var(--primary-cyan);
+      font-size: 1.15rem;
+      margin-top: 12px;
+      margin-bottom: 8px;
+    }
+
+    .team-card p {
+      font-size: 1.05rem;
+      color: #f1f5f9;
+    }
+
+    .team-card a {
+      color: var(--accent-pink);
+      text-decoration: none;
+      font-weight: 700;
+      transition: color var(--transition-speed);
+    }
+
+    .team-card a:hover {
+      color: var(--primary-cyan);
+    }
+
+    .team-card h4 {
+      color: var(--primary-cyan);
+      margin-top: 22px;
+      margin-bottom: 14px;
+      font-size: 1.05rem;
+    }
+
+    .team-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .team-list li {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 9px 18px;
+      border-radius: 25px;
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      font-size: 0.92rem;
+      color: #e2e8f0;
+      font-weight: 600;
+      box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.05);
+    }
+
+    /* --- Live Counter Panel --- */
+    .counter-box {
+      width: 100%;
+      background: rgba(255, 0, 128, 0.06);
+      border: 1px solid rgba(255, 0, 128, 0.35);
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 35px;
+      box-shadow: 0 0 25px rgba(255, 0, 128, 0.12);
+    }
+
+    .counter-box h3 {
+      font-size: 1.05rem;
+      color: #f472b6;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .counter-number {
+      font-size: 3.2rem;
+      font-weight: 900;
+      color: var(--primary-cyan);
+      text-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+    }
+
+    /* --- Call to Action Button --- */
+    .join-btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--primary-cyan), var(--accent-purple));
+      color: #fff;
+      text-decoration: none;
+      padding: 16px 45px;
+      font-size: 1.2rem;
+      font-weight: 800;
+      border-radius: 40px;
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.45);
+      transition: all var(--transition-speed);
+    }
+
+    .join-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 35px rgba(0, 240, 255, 0.8);
+    }
+
+    /* --- Form Section Panel --- */
+    .form-section {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 28px;
+      padding: 40px;
+      margin-top: 25px;
+      text-align: left;
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    [dir="rtl"] .form-section {
+      text-align: right;
+    }
+
+    .form-section h2 {
+      text-align: center;
+      color: var(--primary-cyan);
+      margin-bottom: 30px;
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    .input-group {
+      margin-bottom: 22px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #e2e8f0;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 15px 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: #030409;
+      color: #fff;
+      font-size: 1.05rem;
+      outline: none;
+      transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+    }
+
+    .input-group input:focus {
+      border-color: var(--primary-cyan);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple));
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: all var(--transition-speed);
+      box-shadow: 0 0 25px rgba(255, 0, 128, 0.45);
+    }
+
+    .submit-btn:hover {
+      opacity: 0.95;
+      transform: translateY(-2px);
+      box-shadow: 0 0 35px rgba(255, 0, 128, 0.7);
+    }
+
+    /* --- Timetable / Success Section --- */
+    .timetable-section {
+      margin-top: 45px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 28px;
+      padding: 35px;
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .screenshot-note {
+      color: var(--accent-pink);
+      margin: 14px 0 22px;
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+
+    .schedule-image-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+
+    .schedule-img {
+      width: 100%;
+      max-width: 680px;
+      border-radius: 18px;
+      border: 2px solid var(--primary-cyan);
+      box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+    }
+
+    .swipe-indicator {
+      margin-top: 25px;
+      padding: 18px;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1.5px dashed var(--primary-cyan);
+      border-radius: 16px;
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--primary-cyan);
+      transition: background var(--transition-speed), transform var(--transition-speed);
+    }
+
+    .swipe-indicator:hover {
+      background: rgba(0, 240, 255, 0.2);
+      transform: scale(1.02);
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Navigation / Language Switcher -->
+  <!-- Navigation Bar -->
   <header class="top-bar">
     <div class="logo-container">
-      <img src="logo.jpg" alt="Hacktivators Logo" class="nav-logo">
+      <img src="logo.jpg" alt="Hacktivators Logo" class="nav-logo" onerror="this.style.display='none'">
       <span class="brand-name">HACKTIVATORS</span>
     </div>
     <button id="lang-toggle-btn" onclick="toggleLanguage()">تغيير إلى العربية 🇪🇬</button>
   </header>
 
+  <!-- Main Container -->
   <main class="container">
-    <!-- Hero & Team Section -->
+    
+    <!-- Hero Section -->
     <section class="hero-section">
-      <img src="logo.jpg" alt="Hacktivators Logo" class="hero-logo">
+      <img src="logo.jpg" alt="Hacktivators Logo" class="hero-logo" onerror="this.src='https://via.placeholder.com/150/00f0ff/800080?text=HACKTIVATORS'">
       <h1 class="main-title">HACKTIVATORS</h1>
       <p class="tagline" data-en="INNOVATION • TECHNOLOGY • IMPACT" data-ar="ابتكار • تكنولوجيا • أثر">INNOVATION • TECHNOLOGY • IMPACT</p>
       
-      <!-- Team Card -->
+      <!-- Team Card Panel -->
       <div class="team-card">
-        <h3 data-en="Project Leader" data-ar="رائدة المشروع والتواصل">Project Leader</h3>
-        <p><strong>Celia Ahmed</strong> (<a href="mailto:hacktivators5@gmail.com">hacktivators5@gmail.com</a>)</p>
+        <h3 data-en="Project Leader & Contact" data-ar="رائدة المشروع والتواصل">Project Leader & Contact</h3>
+        <p><strong>Celia Ahmed</strong> (<a href="tel:01205147642">01205147642</a>)</p>
         
         <h4 data-en="Team Members" data-ar="أعضاء الفريق">Team Members</h4>
         <ul class="team-list">
@@ -40,10 +414,12 @@
           <li>Omar Mostafa</li>
           <li>Saleen Ahmed</li>
           <li>Adam Hussein</li>
+          <li>Lamar Mohsen</li>
+          <li>Youssef Khaled</li>
         </ul>
       </div>
 
-      <!-- Live Counter -->
+      <!-- Live Counter Panel -->
       <div class="counter-box">
         <h3 data-en="Registered Students" data-ar="عدد الطلاب المسجلين حتى الآن">Registered Students</h3>
         <div id="student-counter" class="counter-number">0</div>
@@ -52,7 +428,7 @@
       <a href="#register-section" class="join-btn" data-en="JOIN US" data-ar="انضم إلينا">JOIN US</a>
     </section>
 
-    <!-- Registration Form -->
+    <!-- Registration Form Section -->
     <section id="register-section" class="form-section">
       <h2 data-en="Workshop Registration" data-ar="التسجيل في الورشة">Workshop Registration</h2>
       <form id="registration-form" onsubmit="handleRegistration(event)">
@@ -80,19 +456,135 @@
     <section id="timetable-section" class="timetable-section hidden">
       <div class="timetable-header">
         <h2 data-en="Hack-Day Timetable" data-ar="جدول الورشة (Hack-Day)">Hack-Day Timetable</h2>
-        <p class="screenshot-note" data-en="📸 Take a screenshot or Swipe Up / Click below to view your Dashboard" data-ar="📸 خذ لقطة شاشة (Screenshot) أو اضغط بالأسفل للانتقال لصفحتك">📸 Take a screenshot or Swipe Up / Click below to view your Dashboard</p>
+        <p class="screenshot-note" data-en="📸 Take a screenshot or Click below to view your Dashboard" data-ar="📸 خذ لقطة شاشة (Screenshot) أو اضغط بالأسفل للانتقال لصفحتك">📸 Take a screenshot or Click below to view your Dashboard</p>
       </div>
 
       <div class="schedule-image-wrapper">
-        <img src="timetable.jpg" alt="Hack-Day Schedule" class="schedule-img">
+        <img src="timetable.jpg" alt="Hack-Day Schedule" class="schedule-img" onerror="this.src='https://via.placeholder.com/680x450/0c1020/00f0ff?text=Timetable+Image+Ready'">
       </div>
 
       <div class="swipe-indicator" onclick="goToDashboard()">
-        <span data-en="Click / Swipe Up to Go to Student Dashboard ⬆️" data-ar="اضغط هنا / اسحب لأعلى للانتقال لصفحة الطالب ⬆️">Click / Swipe Up to Go to Student Dashboard ⬆️</span>
+        <span data-en="Click to Go to Student Dashboard ⬆️" data-ar="اضغط هنا للانتقال لصفحة الطالب ⬆️">Click to Go to Student Dashboard ⬆️</span>
       </div>
     </section>
+
   </main>
 
-  <script src="script.js"></script>
+  <!-- JavaScript Application Logic -->
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBOun36sO0FR2Tk9Vz-WD4_VuOyEwqdQJQ",
+      authDomain: "hacktivators.firebaseapp.com",
+      projectId: "hacktivators",
+      storageBucket: "hacktivators.firebasestorage.app",
+      messagingSenderId: "384549852638",
+      appId: "1:384549852638:web:76717d7992130a7508794f",
+      measurementId: "G-KMEYBBL5PT"
+    };
+
+    // Initialize Firebase safely
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.firestore();
+
+    let currentLang = 'en';
+
+    // Bilingual Language Toggle Function
+    function toggleLanguage() {
+      const htmlTag = document.documentElement;
+      const langBtn = document.getElementById('lang-toggle-btn');
+
+      if (currentLang === 'en') {
+        currentLang = 'ar';
+        htmlTag.setAttribute('dir', 'rtl');
+        htmlTag.setAttribute('lang', 'ar');
+        langBtn.textContent = 'Switch to English 🇬🇧';
+      } else {
+        currentLang = 'en';
+        htmlTag.setAttribute('dir', 'ltr');
+        htmlTag.setAttribute('lang', 'en');
+        langBtn.textContent = 'تغيير إلى العربية 🇪🇬';
+      }
+
+      const elements = document.querySelectorAll('[data-en][data-ar]');
+      elements.forEach(el => {
+        el.textContent = el.getAttribute(`data-${currentLang}`);
+      });
+    }
+
+    // Live Real-Time Student Counter Firestore Listener
+    function listenToCounter() {
+      db.collection("students").onSnapshot((snapshot) => {
+        const counterElement = document.getElementById("student-counter");
+        if(counterElement) {
+          counterElement.textContent = snapshot.size;
+        }
+      }, (err) => {
+        console.error("Firestore Counter Sync Error: ", err);
+      });
+    }
+
+    // Generate Unique Verification Code
+    function generateStudentCode() {
+      return "HT-" + Math.floor(1000 + Math.random() * 9000);
+    }
+
+    // Registration Form Submission Handler
+    function handleRegistration(e) {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById("submitBtn");
+      submitBtn.disabled = true;
+      submitBtn.textContent = currentLang === 'en' ? "Registering..." : "جاري التسجيل...";
+
+      const name = document.getElementById('studentName').value.trim();
+      const email = document.getElementById('studentEmail').value.trim();
+      const phone = document.getElementById('studentPhone').value.trim();
+      const parentPhone = document.getElementById('parentPhone').value.trim();
+      const studentCode = generateStudentCode();
+
+      // Push record to Firestore Database
+      db.collection("students").add({
+        studentCode: studentCode,
+        fullName: name,
+        email: email,
+        studentPhone: phone,
+        parentPhone: parentPhone,
+        registeredAt: firebase.firestore.FieldValue.serverTimestamp(),
+        attended: false
+      }).then((docRef) => {
+        // Cache session identifiers locally
+        localStorage.setItem("hacktivators_student_id", docRef.id);
+        localStorage.setItem("hacktivators_student_code", studentCode);
+        localStorage.setItem("hacktivators_student_email", email);
+
+        alert(currentLang === 'en' 
+          ? `Registration Successful! Your Student Code is #${studentCode}` 
+          : `تم التسجيل بنجاح! كود الطالب الخاص بك هو #${studentCode}`);
+
+        document.getElementById('register-section').classList.add('hidden');
+        document.getElementById('timetable-section').classList.remove('hidden');
+        document.getElementById('timetable-section').scrollIntoView({ behavior: 'smooth' });
+      }).catch((error) => {
+        console.error("Firestore Write Error: ", error);
+        alert(currentLang === 'en' ? "Registration Failed. Please try again." : "حدث خطأ أثناء التسجيل، يجدر المحاولة مجدداً.");
+        submitBtn.disabled = false;
+        submitBtn.textContent = currentLang === 'en' ? "Register Now" : "سجّل الآن";
+      });
+    }
+
+    // Navigation trigger to Dashboard page
+    function goToDashboard() {
+      window.location.href = "https://yelkhawaga-oss.github.io/hacktivators-dashboard/";
+    }
+
+    // Initialize listeners on load
+    window.onload = function() {
+      listenToCounter();
+    };
+  </script>
 </body>
-</html>
+          </html>
+          
